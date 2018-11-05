@@ -1,0 +1,11 @@
+#### Step 2
+- To validate each account number:
+* in `translateDigitsToNumbers`, calculate the checksum as part of the conditional for foundNumber (line 42), and return the total checksum as part of the overall function.  More specifically, instead of this function just returning the account number, it would return the account number and the checksum, which can be used later for validation.
+* add the actual validation (checksum % 11 -> let's call this function `validateAccount`) as part of `getAccountNumber` so that we can validate the checksum with the results of `translateDigitsToNumbers`.  `getAccountNumber` would likely then return the account number as well as a boolean indicating whether or not it is valid.
+
+#### Step 3
+- First, add an else clause on line 44 to handle the case where foundNumber is undefined -> this will return the `?` required to make the number illegal.  This will not impact the checksum number since checking for illegality doesn't really belong in this function
+- Next, as part of `validateAccount` as defined in step 2, add a call to a new function called `isNumberIllegal`, which will use regex to check for the existance of any `?` characters. If this returns true, return the account number + `ILL` from `validateAccount`.  The next check would be `isAccountValid`, which will now house the `checksum % 11` calculation.  If true, return the account number + `ERR` from `validateAccount`.  If both of these checks are false, just return the account number.
+
+#### Step 4
+- Without getting too far into the actual function names or lines since that's a little premature given step 2 and 3 haven't yet been coded, this use case will require keeping information about the untranslated number in addition to the translated number and checksum.  If the number is illegal or the checksum is invalid, the untranslated number should go back through a funtion similar to `getTranslationForCurrentNumber` but instead of looking for an exact match, look for the arrays where 2 of the elements are exact matches and then use the string `replace` method to try adding a pipe or underscore to the unmatched one to find translations where each element of the array is an exact match. Then, toss these back through the checksum validations to figure out which account number combinations are possible.

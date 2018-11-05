@@ -29,12 +29,16 @@ const groupArraysIntoDigits = ({arrays, group = []}) => {
   return group;
 };
 
+const getTranslationForCurrentNumber = (digit) => {
+  return numberTranslations.find(currNum => {
+    const match = digit.toString() === currNum.key.toString();
+    return match;
+  });
+};
+
 const translateDigitsToNumbers = (digits) => {
   return digits.map((digit) => {
-    const foundNumber = numberTranslations.find(currNum => {
-      const match = digit.toString() === currNum.key.toString();
-      return match;
-    });
+    const foundNumber = getTranslationForCurrentNumber(digit);
     if (foundNumber) {
       return foundNumber.number;
     };
